@@ -6,7 +6,7 @@ const activeSection = ref('cover')
 
 // Data pasangan — ganti sesuai info kalian
 const groom = {
-  name: 'RAYHAN',
+  name: 'BRYAN',
   fullName: 'Rayhan Rizqi Bebryan',
   parents: 'Putra dari Bpk. ... & Ibu ...',
   emoji: '🤵',
@@ -52,10 +52,18 @@ function submitRsvp() {
   rsvpSent.value = true
 }
 
-// Gallery pixel art filter notice
+// Gallery — foto dari assets (diproses jadi 8-bit via PixelPhoto)
 const photos = [
-  { src: '/src/assets/photo1.jpg', caption: 'LEVEL 1: FIRST DATE' },
-  { src: '/src/assets/photo2.jpg', caption: 'LEVEL 2: ADVENTURE' },
+  {
+    src: new URL('../assets/photo1.jpeg', import.meta.url).href,
+    caption: 'STAGE 1: FIRST MEET',
+    label: '💍',
+  },
+  {
+    src: new URL('../assets/photo2.jpeg', import.meta.url).href,
+    caption: 'STAGE 2: ADVENTURE',
+    label: '🎮',
+  },
 ]
 
 onMounted(() => {
@@ -300,42 +308,8 @@ const sections = ['cover', 'couple', 'event', 'gallery', 'rsvp']
       <div class="gallery-grid">
         <div v-for="(p, i) in photos" :key="i" class="gallery-item">
           <div class="photo-frame">
-            <img
-              :src="p.src"
-              :alt="p.caption"
-              class="pixel-photo"
-              @error="(e) => (e.target.style.display = 'none')"
-            />
-            <!-- Fallback pixel art frame if no photo -->
-            <div class="photo-fallback">
-              <svg
-                viewBox="0 0 64 64"
-                width="100%"
-                height="100%"
-                style="image-rendering: pixelated"
-              >
-                <rect width="64" height="64" fill="#0d0d22" />
-                <rect x="8" y="8" width="48" height="48" fill="#1a0a3e" />
-                <!-- pixel couple silhouette -->
-                <rect x="16" y="20" width="8" height="8" fill="#ffdd00" />
-                <rect x="18" y="28" width="4" height="12" fill="#ffdd00" />
-                <rect x="40" y="20" width="8" height="8" fill="#ff69b4" />
-                <rect x="38" y="22" width="12" height="6" fill="#ff99cc" />
-                <rect x="42" y="28" width="4" height="12" fill="#ff69b4" />
-                <rect x="14" y="40" width="36" height="4" fill="#2a1a0a" />
-                <rect x="22" y="16" width="4" height="4" fill="#2a1a0a" />
-                <text
-                  x="32"
-                  y="60"
-                  fill="#888"
-                  font-size="5"
-                  text-anchor="middle"
-                  font-family="monospace"
-                >
-                  PHOTO
-                </text>
-              </svg>
-            </div>
+            <img :src="p.src" :alt="p.caption" class="photo-img" />
+            <div class="photo-overlay-badge">{{ p.label }}</div>
           </div>
           <div class="photo-caption">{{ p.caption }}</div>
           <div class="photo-badge">STAGE {{ i + 1 }}</div>
@@ -804,19 +778,11 @@ const sections = ['cover', 'couple', 'event', 'gallery', 'rsvp']
   position: relative;
   background: #0d0d22;
 }
-.pixel-photo {
+.photo-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  image-rendering: pixelated;
-  filter: contrast(1.1) saturate(1.2);
-}
-.photo-fallback {
-  position: absolute;
-  inset: 0;
-}
-.pixel-photo + .photo-fallback {
-  display: none;
+  display: block;
 }
 .photo-caption {
   font-size: clamp(0.38rem, 2vw, 0.55rem);
@@ -829,6 +795,14 @@ const sections = ['cover', 'couple', 'event', 'gallery', 'rsvp']
   color: #000;
   padding: 0.25rem 0.6rem;
   box-shadow: 2px 2px 0 #880044;
+}
+.photo-overlay-badge {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  font-size: 1.2rem;
+  filter: drop-shadow(2px 2px 0 #000);
+  pointer-events: none;
 }
 .gallery-deco {
   display: flex;
