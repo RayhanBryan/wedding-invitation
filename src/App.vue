@@ -108,6 +108,7 @@ body {
 
 .screen {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,12 +117,20 @@ body {
 
 .intro-screen {
   background: radial-gradient(ellipse at 50% 30%, #2a0a4e 0%, #0a0a1a 65%);
+  align-items: flex-start;
+  padding-top: max(2rem, env(safe-area-inset-top));
+  padding-bottom: max(2rem, env(safe-area-inset-bottom));
 }
 
 .pixel-title {
   text-align: center;
   max-width: 560px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 0;
 }
 
 .top-label {
@@ -161,16 +170,16 @@ body {
 .subtitle {
   color: var(--orange);
   font-size: clamp(0.5rem, 2.5vw, 0.75rem);
-  margin: 1rem 0 0.5rem;
+  margin: 0.5rem 0 0.25rem;
 }
 .hint {
   color: #888;
   font-size: clamp(0.4rem, 2vw, 0.55rem);
   line-height: 2.2;
-  margin: 1.5rem 0 2rem;
+  margin: 0.75rem 0 1rem;
 }
 .copyright {
-  margin-top: 2rem;
+  margin-top: 1rem;
   font-size: 0.35rem;
   color: #444;
 }
